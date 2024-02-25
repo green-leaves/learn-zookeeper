@@ -14,13 +14,19 @@ public class ZooKeeperClientApplication {
         if (zooKeeper.exists(instancesPath, false) == null) {
             zooKeeper.create(instancesPath, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         }
+
+        zooKeeper.getChildren(instancesPath, false).forEach(System.out::println);
+
         String instancePath = zooKeeper
                 .create(instancesPath + "/instance-",
                         null,
                         ZooDefs.Ids.OPEN_ACL_UNSAFE,
                         CreateMode.EPHEMERAL_SEQUENTIAL);
+
         System.out.println("Registered instance: " + instancePath);
 
         TimeUnit.MINUTES.sleep(10);
+
+
     }
 }
